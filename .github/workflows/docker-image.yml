@@ -19,10 +19,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build image
-        run: docker build -t thirdgodiswinning180/waansaung:latest .
+        run: docker build -t thirdgodiswinning180/test:latest .
 
       - name: Push image
-        run: docker push thirdgodiswinning180/waansaung:latest
+        run: docker push thirdgodiswinning180/test:latest
 
 #  deploy job
     deploy:
@@ -32,6 +32,6 @@ jobs:
     steps:
       - name: Pull new image
         run: |
-          cd /opt/apps/task-api
-          docker compose pull
-          docker compose up -d
+          cd /cicd
+          sudo  docker compose pull thirdgodiswinning180/test:latest
+          sudo docker compose up -d --build
