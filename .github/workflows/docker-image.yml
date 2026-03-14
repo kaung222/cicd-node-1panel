@@ -36,4 +36,4 @@ jobs:
             docker pull thirdgodiswinning180/test:latest
             docker stop test-api || true
             docker rm test-api || true
-            docker run -d --name test-api -p 3000:3000 thirdgodiswinning180/test:latest
+            docker run -d --name test-api -p 3001:3000 thirdgodiswinning180/test:latest
