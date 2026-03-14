@@ -1,0 +1,37 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: ["cicd"]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build image
+        run: docker build -t thirdgodiswinning180/waansaung:latest .
+
+      - name: Push image
+        run: docker push thirdgodiswinning180/waansaung:latest
+
+#  deploy job
+    deploy:
+    runs-on: self-hosted
+    needs: docker
+
+    steps:
+      - name: Pull new image
+        run: |
+          cd /opt/apps/task-api
+          docker compose pull
+          docker compose up -d
