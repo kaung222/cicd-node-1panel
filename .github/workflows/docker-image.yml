@@ -2,9 +2,10 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: ["cicd"]
+    branches: ["main"]
 
 jobs:
+
   docker:
     runs-on: ubuntu-latest
 
@@ -24,14 +25,14 @@ jobs:
       - name: Push image
         run: docker push thirdgodiswinning180/test:latest
 
-#  deploy job
-    deploy:
+
+  deploy:
     runs-on: self-hosted
     needs: docker
 
     steps:
-      - name: Pull new image
+      - name: Deploy container
         run: |
           cd /cicd
-          sudo  docker compose pull thirdgodiswinning180/test:latest
-          sudo docker compose up -d --build
+          sudo docker compose pull
+          sudo docker compose up -d
