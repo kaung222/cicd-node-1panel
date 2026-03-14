@@ -35,4 +35,4 @@ RUN npm ci --only=production --no-audit --no-fund --progress=false
 EXPOSE 3000
 
 # Start the application
-CMD ["node","dist/src/main.js"]
+CMD ["node","dist/main.js"]
